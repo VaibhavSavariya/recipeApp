@@ -17,6 +17,7 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 import Button from "@/app/Components/btn/page";
 import "./style.css";
+import toast from "react-hot-toast";
 const SubmittedRecipe = () => {
   const params = useParams();
   const [infoLoading, setInfoLoading] = useState(false);
@@ -83,8 +84,9 @@ const SubmittedRecipe = () => {
       });
       localStorage.setItem("users", JSON.stringify(updateUsers));
     } else {
-      alert("Please login to add favorites.");
+      toast.error("Please login to add favorites.");
     }
+    toast.success("Added Successfully!");
   };
   const handleFavRemove = () => {
     setActiveFav(!activeFav);
@@ -112,6 +114,7 @@ const SubmittedRecipe = () => {
           return updated;
         });
         localStorage.setItem("users", JSON.stringify(updateUsers));
+        toast.error("Remove Successfully!");
       }
     }
   };

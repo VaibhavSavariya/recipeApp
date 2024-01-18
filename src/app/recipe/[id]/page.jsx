@@ -18,6 +18,7 @@ import {
   WhatsappShareButton,
 } from "next-share";
 import { InfinitySpin } from "react-loader-spinner";
+import toast from "react-hot-toast";
 const Recipe = () => {
   const params = useParams();
   const [infoLoading, setInfoLoading] = useState(false);
@@ -81,8 +82,11 @@ const Recipe = () => {
         return updated;
       });
       localStorage.setItem("users", JSON.stringify(updateUsers));
+      toast.success("Added Successfully!");
     } else {
-      alert("Please login to add favorites.");
+      toast.error(
+        "To add a recipe to your favourites. Please login to your account."
+      );
     }
   };
   const handleFavRemove = () => {
@@ -111,6 +115,7 @@ const Recipe = () => {
           return updated;
         });
         localStorage.setItem("users", JSON.stringify(updateUsers));
+        toast.error("Removed Successfully!");
       } else {
         null;
       }

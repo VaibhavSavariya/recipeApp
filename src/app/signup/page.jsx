@@ -5,6 +5,7 @@ import "./style.css";
 import Button from "../Components/btn/page";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 const Signup = () => {
   const {
     register,
@@ -16,13 +17,18 @@ const Signup = () => {
   const router = useRouter();
   const getUsers = JSON.parse(localStorage.getItem("users")) || [];
   const handleSubmitData = (data) => {
-    const id = Math.floor(Math.random() * 1000) + 1;
-    const newUser = {
-      id,
-      ...data,
-    };
-    localStorage.setItem("users", JSON.stringify([...getUsers, newUser]));
-    router.push("/login");
+    if (!getUsers.find((user) => user?.email === data?.email)) {
+      const id = Math.floor(Math.random() * 1000) + 1;
+      const newUser = {
+        id,
+        ...data,
+      };
+      localStorage.setItem("users", JSON.stringify([...getUsers, newUser]));
+      router.push("/login");
+      toast.success("Register Successfully!");
+    } else {
+      toast.error("User already exists. Please login.");
+    }
   };
   return (
     <>

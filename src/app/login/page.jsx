@@ -5,6 +5,7 @@ import Link from "next/link";
 import Button from "../Components/btn/page";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 const Login = () => {
   const {
     register,
@@ -31,7 +32,9 @@ const Login = () => {
       router.push("/");
       router.refresh();
     } else {
-      alert("Email or Password is incorrect.");
+      toast.error(
+        "Authetication Failed: the entered email or Password is incorrect. OR User account doesn't exists."
+      );
     }
   };
 
@@ -48,7 +51,6 @@ const Login = () => {
             id="email"
             type="email"
             placeholder="Enter Email"
-            // onChange={handleChange}
             {...register("email", { required: "Please enter email." })}
           />
           {errors?.email && (
@@ -68,7 +70,6 @@ const Login = () => {
             id="password"
             type="password"
             placeholder="Enter Password"
-            // onChange={handleChange}
             {...register("password", { required: "Please enter password." })}
           />
           {errors?.password && (

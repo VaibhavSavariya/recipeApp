@@ -4,6 +4,7 @@ import "./style.css";
 import Button from "../Components/btn/page";
 import { GrUpload } from "react-icons/gr";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 const CreateRecipe = () => {
   const imageRef = useRef();
@@ -14,9 +15,12 @@ const CreateRecipe = () => {
     summary: "",
     image: "",
   });
+
+  /** JSON DATA **/
   const getUsers = JSON.parse(localStorage.getItem("users"));
   const getMe = JSON.parse(localStorage.getItem("Me"));
   const existingSub = getMe?.submittedRecipe;
+
   const handleIngredients = () => {
     setRecipeForm({
       ...recipeForm,
@@ -41,6 +45,7 @@ const CreateRecipe = () => {
       ingredients,
     });
   };
+
   const handleSubmitData = (e) => {
     e.preventDefault();
     const id = Math.floor(Math.random() * 1000) + "UUID";
@@ -97,7 +102,7 @@ const CreateRecipe = () => {
         summary: "",
       });
     }
-    alert("Recipe Created Successfully!");
+    toast.success("Recipe Created Successfully!");
   };
 
   const handleImageUpload = (e) => {
