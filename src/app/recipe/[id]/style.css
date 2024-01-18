@@ -1,0 +1,117 @@
+.detailWrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  margin: 100px 100px;
+  gap: 50px;
+}
+.detailWrapper h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.detailLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+.detailWrapper img {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.detailRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.btnWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.detailBtn {
+  width: 150px;
+  background: white !important;
+  color: black !important;
+  border: 1px solid #f3f3f3;
+  transition: all 0.3s;
+}
+
+.detailBtn:hover {
+  background-color: black !important;
+  color: white !important;
+}
+.instructions {
+  width: 500px;
+}
+.description {
+  text-align: justify;
+  padding: 12px;
+}
+
+.active {
+  background-color: black !important;
+  color: white !important;
+}
+
+.instructions::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+.instructions::-webkit-scrollbar {
+  width: 5px;
+  background-color: #f5f5f5;
+}
+
+.instructions::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border: 2px solid #555555;
+}
+
+.social-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-btn {
+  height: 32px;
+  width: 32px;
+  border: 1px solid #f3f3f3;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.social-btn {
+  height: 32px;
+  width: 32px;
+  border: 1px solid #f3f3f3;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.fav-btn {
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .detailWrapper {
+    margin: 100px 0px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .instructions {
+    width: auto;
+  }
+}

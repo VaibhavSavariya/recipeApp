@@ -1,0 +1,139 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 80px 100px;
+}
+.profileRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 210px;
+  border-left: 1px solid #f3f3f3;
+  padding: 20px;
+  height: 400px;
+  width: 680px;
+}
+.profileRightFav {
+  border-left: 1px solid #f3f3f3;
+  padding: 20px;
+  height: 400px;
+  width: 680px;
+}
+.profileRightFav h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+.sideBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.logoutBtn {
+  width: 100px !important;
+  margin-top: 75px;
+}
+
+.side-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #f3f3f3;
+  padding: 10px;
+  border-radius: 10px;
+  /* width: 100px; */
+  transition: all 0.3s;
+}
+.side-item:hover {
+  background-color: black;
+  color: white;
+}
+.active {
+  background-color: black;
+  color: white;
+}
+.profileMenu {
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.user-info input {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.recipeCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.recipeCard img {
+  border-radius: 20px;
+  width: 100%;
+  height: 200px;
+  object-fit: unset;
+}
+.recipeCard:hover {
+  transform: scale(1.01);
+  cursor: pointer;
+}
+.recipeCard h4 {
+  position: absolute;
+  z-index: 10;
+  color: white;
+  font-weight: 600;
+  width: 100px;
+  left: 25%;
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .profile-container {
+    margin: 40px 0px;
+    flex-direction: column;
+  }
+  .sideBar {
+    flex-direction: row;
+  }
+  .profileRight {
+    flex-direction: column;
+    height: 0%;
+    gap: 15px;
+    border-top: 1px solid #f3f3f3;
+    border-left: none;
+    width: 65%;
+  }
+  .profileRightFav {
+    width: 68%;
+    border-left: none;
+    border-top: 1px solid #f3f3f3;
+  }
+}
