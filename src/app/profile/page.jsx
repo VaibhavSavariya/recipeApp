@@ -17,7 +17,7 @@ const Profile = () => {
   const Me = JSON.parse(localStorage.getItem("Me"));
   const handleLogOut = () => {
     localStorage.removeItem("Me");
-    router.push("/");
+    router.push("/login");
     router.refresh();
   };
   return (
