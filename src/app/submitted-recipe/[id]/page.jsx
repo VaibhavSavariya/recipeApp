@@ -44,6 +44,49 @@ const SubmittedRecipe = () => {
     }
   };
   const handleFav = () => {
+    if (!activeFav && getMe?.favouriteRecipe?.length > 0 && getMe?.email) {
+      setActiveFav(!activeFav);
+      const newUser = getMe?.favouriteRecipe.map((recipe) => {
+        localStorage.setItem(
+          "Me",
+          JSON.stringify({
+            ...getMe,
+            favouriteRecipe: [...existingFav, recipeInfo],
+          })
+        );
+      });
+      const getNewUser = JSON.parse(localStorage.getItem("Me"));
+      const updateUsers = getUsers.map((user) => {
+        const updated =
+          user?.email === getNewUser?.email
+            ? { ...user, favouriteRecipe: getNewUser?.favouriteRecipe }
+            : user;
+        return updated;
+      });
+      localStorage.setItem("users", JSON.stringify(updateUsers));
+    } else if (getMe?.email) {
+      setActiveFav(!activeFav);
+      localStorage.setItem(
+        "Me",
+        JSON.stringify({
+          ...getMe,
+          favouriteRecipe: [recipeInfo],
+        })
+      );
+      const getNewUser = JSON.parse(localStorage.getItem("Me"));
+      const updateUsers = getUsers.map((user) => {
+        const updated =
+          user?.email === getNewUser?.email
+            ? { ...user, favouriteRecipe: getNewUser?.favouriteRecipe }
+            : user;
+        return updated;
+      });
+      localStorage.setItem("users", JSON.stringify(updateUsers));
+    } else {
+      alert("Please login to add favorites.");
+    }
+  };
+  const handleFavRemove = () => {
     setActiveFav(!activeFav);
 
     if (getMe?.email) {
@@ -53,6 +96,7 @@ const SubmittedRecipe = () => {
       const updatedFavRecipes = [...getMe?.favouriteRecipe];
 
       if (isRecipeInFavorites) {
+        console.log("first");
         const updatedFavorites = updatedFavRecipes.filter(
           (recipe) => recipe.id !== params.id
         );
@@ -68,30 +112,8 @@ const SubmittedRecipe = () => {
               : user;
           return updated;
         });
-        localStorage.setItem(
-          "users",
-          JSON.stringify([...getUsers, updateUsers])
-        );
-      } else {
-        const newRecipe = recipeInfo;
-        updatedFavRecipes.push(newRecipe);
-        localStorage.setItem(
-          "Me",
-          JSON.stringify({ ...getMe, favouriteRecipe: updatedFavRecipes })
-        );
+        localStorage.setItem("users", JSON.stringify(updateUsers));
       }
-
-      const updatedUsers = getUsers.map((user) => {
-        const updatedUser =
-          user.email === getMe?.email
-            ? { ...user, favouriteRecipe: updatedFavRecipes }
-            : user;
-        return updatedUser;
-      });
-
-      localStorage.setItem("users", JSON.stringify(updatedUsers));
-    } else {
-      alert("Please login to add favorites.");
     }
   };
 
@@ -121,7 +143,16 @@ const SubmittedRecipe = () => {
           <>
             <div className="detailLeft">
               <h2>{recipeInfo?.title}</h2>
-              <img alt="recipe-logo" src={recipeInfo?.image} width="100px" />
+              <img
+                alt="recipe-logo"
+                src={recipeInfo?.image}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src =
+                    "https://img.freepik.com/premium-vector/best-recipes-logo-with-yellow-pan_23-2147492924.jpg";
+                }}
+                width="100px"
+              />
               <p
                 style={{
                   display: "flex",
@@ -136,7 +167,7 @@ const SubmittedRecipe = () => {
                 Add to Favorites:{" "}
                 <span>
                   {FavId?.includes(params?.id) ? (
-                    <MdFavorite className="fav-btn" onClick={handleFav} />
+                    <MdFavorite className="fav-btn" onClick={handleFavRemove} />
                   ) : (
                     <MdFavoriteBorder className="fav-btn" onClick={handleFav} />
                   )}

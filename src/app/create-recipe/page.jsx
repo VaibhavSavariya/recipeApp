@@ -1,19 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./style.css";
 import Button from "../Components/btn/page";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { GrUpload } from "react-icons/gr";
+import Image from "next/image";
+
 const CreateRecipe = () => {
-  const router = useRouter();
+  const imageRef = useRef();
   const [recipeForm, setRecipeForm] = useState({
     title: "",
     instructions: "",
     ingredients: [],
     summary: "",
-    image:
-      "https://img.freepik.com/premium-vector/best-recipes-logo-with-yellow-pan_23-2147492924.jpg",
+    image: "",
   });
+  console.log("recipeForm:", recipeForm);
   const getUsers = JSON.parse(localStorage.getItem("users"));
   const getMe = JSON.parse(localStorage.getItem("Me"));
   const existingSub = getMe?.submittedRecipe;
@@ -98,12 +99,57 @@ const CreateRecipe = () => {
       });
     }
   };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const imageData = reader.result;
+        setRecipeForm({ ...recipeForm, image: imageData });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
       <div className="recipe-form-container">
         <h4>Create a Recipe </h4>
         <div className="form-header">
           <form className="recipe-form" onSubmit={handleSubmitData}>
+            <div className="imgBtn">
+              <input
+                type="file"
+                ref={imageRef}
+                hidden
+                accept="images/*"
+                onChange={handleImageUpload}
+              />
+              <div
+                className="upload-icon"
+                onClick={() => imageRef.current.click()}
+              >
+                <GrUpload />
+              </div>
+              {!recipeForm?.image && <p>Choose file to upload</p>}
+              {recipeForm?.image && (
+                <Image
+                  src={recipeForm?.image}
+                  alt="recipe-image"
+                  width={100}
+                  height={80}
+                  style={{
+                    borderRadius: "10px",
+                    height: "80px",
+                    objectFit: "cover",
+                  }}
+                />
+              )}
+            </div>
             <label htmlFor="title">Title</label>
             <input
               id="title"

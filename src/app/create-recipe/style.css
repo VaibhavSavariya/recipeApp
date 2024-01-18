@@ -36,6 +36,10 @@
   height: 518px;
   overflow: auto;
   width: 50%;
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; */
 }
 
 .form-header::-webkit-scrollbar-track {
@@ -51,6 +55,28 @@
 .form-header::-webkit-scrollbar-thumb {
   background-color: #000000;
   border: 2px solid #555555;
+}
+.imgBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 165px;
+}
+.upload-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid #f3f3f3;
+  padding: 10px;
+  border-radius: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.upload-icon:hover {
+  background-color: black;
+  color: white;
 }
 
 @media only screen and (max-width: 768px) {
