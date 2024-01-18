@@ -96,7 +96,6 @@ const SubmittedRecipe = () => {
       const updatedFavRecipes = [...getMe?.favouriteRecipe];
 
       if (isRecipeInFavorites) {
-        console.log("first");
         const updatedFavorites = updatedFavRecipes.filter(
           (recipe) => recipe.id !== params.id
         );

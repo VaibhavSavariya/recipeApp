@@ -14,7 +14,6 @@ const CreateRecipe = () => {
     summary: "",
     image: "",
   });
-  console.log("recipeForm:", recipeForm);
   const getUsers = JSON.parse(localStorage.getItem("users"));
   const getMe = JSON.parse(localStorage.getItem("Me"));
   const existingSub = getMe?.submittedRecipe;

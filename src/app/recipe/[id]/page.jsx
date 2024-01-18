@@ -28,7 +28,6 @@ const Recipe = () => {
   const getMe = JSON.parse(localStorage.getItem("Me"));
   const existingFav = getMe?.favouriteRecipe;
   const FavId = existingFav?.map((recipe) => recipe?.id);
-  console.log("FavId:", FavId);
   const getRecipeInfo = async () => {
     setInfoLoading(true);
     try {
@@ -87,22 +86,18 @@ const Recipe = () => {
     }
   };
   const handleFavRemove = () => {
-    console.log("first");
     setActiveFav(!activeFav);
 
     if (getMe?.email) {
-      console.log("email");
       const isRecipeInFavorites = getMe?.favouriteRecipe?.some(
         (recipe) => recipe.id === parseInt(params.id)
       );
       const updatedFavRecipes = [...getMe?.favouriteRecipe];
 
       if (isRecipeInFavorites) {
-        console.log("second");
         const updatedFavorites = updatedFavRecipes.filter(
           (recipe) => recipe.id !== parseInt(params.id)
         );
-        console.log("updatedFavorites:", updatedFavorites);
         localStorage.setItem(
           "Me",
           JSON.stringify({ ...getMe, favouriteRecipe: updatedFavorites })
