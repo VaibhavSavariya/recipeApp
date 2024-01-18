@@ -36,10 +36,6 @@
   height: 518px;
   overflow: auto;
   width: 50%;
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px; */
 }
 
 .form-header::-webkit-scrollbar-track {
