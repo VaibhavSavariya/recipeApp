@@ -48,7 +48,7 @@ const Signup = () => {
                 marginTop: "-18px",
               }}
             >
-              Please enter username.
+              {errors?.username?.message}
             </span>
           )}
           <label htmlFor="email">Email</label>
@@ -67,7 +67,7 @@ const Signup = () => {
                 marginTop: "-18px",
               }}
             >
-              Please enter email.
+              {errors?.email?.message}
             </span>
           )}
           <label htmlFor="password">Password</label>
@@ -75,7 +75,13 @@ const Signup = () => {
             id="password"
             type="password"
             placeholder=" Enter Password"
-            {...register("password", { required: "Please enter password." })}
+            {...register("password", {
+              required: "Please enter password.",
+              minLength: {
+                value: 4,
+                message: "Length must be more than 3 characters.",
+              },
+            })}
           />
           {errors?.password && (
             <span
@@ -86,7 +92,7 @@ const Signup = () => {
                 marginTop: "-18px",
               }}
             >
-              Please enter password.
+              {errors?.password?.message}
             </span>
           )}
           <Button type="submit">Sign up</Button>

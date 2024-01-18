@@ -97,6 +97,7 @@ const CreateRecipe = () => {
         summary: "",
       });
     }
+    alert("Recipe Created Successfully!");
   };
 
   const handleImageUpload = (e) => {
