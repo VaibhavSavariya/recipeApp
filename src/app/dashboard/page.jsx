@@ -8,12 +8,9 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { useRouter } from "next/navigation";
 import { InfinitySpin } from "react-loader-spinner";
-import { FaPizzaSlice } from "react-icons/fa6";
-import { FaHamburger } from "react-icons/fa";
-import { GiNoodles } from "react-icons/gi";
-import { GiChopsticks } from "react-icons/gi";
 
 import "./style.css";
+import SearchBar from "../Components/searchBar/page";
 const Dashboard = () => {
   const router = useRouter();
   const [recipesData, setRecipesData] = useState([]);
@@ -57,36 +54,10 @@ const Dashboard = () => {
           margin: "50px",
         }}
       >
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Search Recipes..."
-            onChange={handleChange}
-            onKeyDown={getSearchRecipe}
-          />
-        </div>
-        <div className="filter-bar">
-          <div className="filter-item">
-            <Link href={"/recipe/cuisine/italian"}>
-              <FaPizzaSlice className="filterMenu" />
-            </Link>
-          </div>
-          <div className="filter-item">
-            <Link href={"/recipe/cuisine/american"}>
-              <FaHamburger className="filterMenu" />
-            </Link>
-          </div>
-          <div className="filter-item">
-            <Link href={"/recipe/cuisine/thai"}>
-              <GiNoodles className="filterMenu" />
-            </Link>
-          </div>
-          <div className="filter-item">
-            <Link href={"/recipe/cuisine/japanese"}>
-              <GiChopsticks className="filterMenu" />
-            </Link>
-          </div>
-        </div>
+        <SearchBar
+          handleChange={handleChange}
+          getSearchRecipe={getSearchRecipe}
+        />
         <div className="recipesContainer">
           {recipeLoading ? (
             <div
@@ -149,7 +120,14 @@ const Dashboard = () => {
                       alignItems: "center",
                     }}
                   >
-                    No Data
+                    <img
+                      src="https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg"
+                      alt="no data icon"
+                      style={{
+                        height: "200px",
+                        width: "200px",
+                      }}
+                    />
                   </div>
                 )}
               </div>

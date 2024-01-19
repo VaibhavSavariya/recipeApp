@@ -261,7 +261,7 @@ const SubmittedRecipe = () => {
                     width: window.innerWidth <= 768 ? "auto" : "500px",
                   }}
                 >
-                  {recipeInfo?.ingredients.map((ingredient, index) => (
+                  {recipeInfo?.ingredients?.map((ingredient, index) => (
                     <li
                       style={{
                         marginBottom: "5px",

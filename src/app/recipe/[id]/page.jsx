@@ -256,7 +256,7 @@ const Recipe = () => {
                     width: window.innerWidth <= 768 ? "auto" : "500px",
                   }}
                 >
-                  {recipeInfo?.extendedIngredients.map((ingredient, index) => (
+                  {recipeInfo?.extendedIngredients?.map((ingredient, index) => (
                     <li
                       style={{
                         marginBottom: "5px",

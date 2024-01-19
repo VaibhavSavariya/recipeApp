@@ -153,7 +153,14 @@ const Profile = () => {
                     alignItems: "center",
                   }}
                 >
-                  No Data
+                  <img
+                    src="https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg"
+                    alt="no data icon"
+                    style={{
+                      height: "200px",
+                      width: "200px",
+                    }}
+                  />
                 </div>
               )}
             </>
@@ -217,7 +224,14 @@ const Profile = () => {
                     alignItems: "center",
                   }}
                 >
-                  No Data
+                  <img
+                    src="https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg"
+                    alt="no data icon"
+                    style={{
+                      height: "200px",
+                      width: "200px",
+                    }}
+                  />
                 </div>
               )}
             </>
