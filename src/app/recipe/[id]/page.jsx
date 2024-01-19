@@ -65,6 +65,7 @@ const Recipe = () => {
         return updated;
       });
       secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
+      toast.success("Added Successfully!");
     } else if (getMe?.email) {
       setActiveFav(!activeFav);
       secureLocalStorage.setItem(
