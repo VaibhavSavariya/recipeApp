@@ -97,7 +97,7 @@ const Profile = () => {
                     borderRadius: "50%",
                   }}
                 />
-                <p>{Me.username}</p>
+                <p>{Me?.username}</p>
                 <Button className="logoutBtn" onClick={handleLogOut}>
                   Logout
                 </Button>
