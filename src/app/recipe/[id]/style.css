@@ -114,4 +114,7 @@
   .instructions {
     width: auto;
   }
+  .detailLeft {
+    margin: 20px;
+  }
 }

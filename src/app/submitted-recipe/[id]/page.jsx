@@ -259,7 +259,7 @@ const SubmittedRecipe = () => {
                 <ul
                   style={{
                     listStyle: "disc",
-                    width: window.innerWidth <= 768 ? "auto" : "500px",
+                    width: window.innerWidth <= 768 ? "300px" : "500px",
                   }}
                 >
                   {recipeInfo?.ingredients?.map((ingredient, index) => (

@@ -254,7 +254,7 @@ const Recipe = () => {
                 <ul
                   style={{
                     listStyle: "disc",
-                    width: window.innerWidth <= 768 ? "auto" : "500px",
+                    width: window.innerWidth <= 768 ? "300px" : "500px",
                   }}
                 >
                   {recipeInfo?.extendedIngredients?.map((ingredient, index) => (
