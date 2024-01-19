@@ -5,6 +5,7 @@ import Button from "../Components/btn/page";
 import { GrUpload } from "react-icons/gr";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import secureLocalStorage from "react-secure-storage";
 
 const CreateRecipe = () => {
   const imageRef = useRef();
@@ -17,8 +18,8 @@ const CreateRecipe = () => {
   });
 
   /** JSON DATA **/
-  const getUsers = JSON.parse(localStorage.getItem("users"));
-  const getMe = JSON.parse(localStorage.getItem("Me"));
+  const getUsers = JSON.parse(secureLocalStorage.getItem("users"));
+  const getMe = JSON.parse(secureLocalStorage.getItem("Me"));
   const existingSub = getMe?.submittedRecipe;
 
   const handleIngredients = () => {
@@ -55,7 +56,7 @@ const CreateRecipe = () => {
         ...recipeForm,
       };
       const newUser = getMe?.submittedRecipe.map((recipe) => {
-        localStorage.setItem(
+        secureLocalStorage.setItem(
           "Me",
           JSON.stringify({
             ...getMe,
@@ -63,7 +64,7 @@ const CreateRecipe = () => {
           })
         );
       });
-      const getNewUser = JSON.parse(localStorage.getItem("Me"));
+      const getNewUser = JSON.parse(secureLocalStorage.getItem("Me"));
       const updateUsers = getUsers.map((user) => {
         const updated =
           user?.email === getNewUser?.email
@@ -71,7 +72,7 @@ const CreateRecipe = () => {
             : user;
         return updated;
       });
-      localStorage.setItem("users", JSON.stringify(updateUsers));
+      secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
       setRecipeForm({
         title: "",
         instructions: "",
@@ -79,14 +80,14 @@ const CreateRecipe = () => {
         summary: "",
       });
     } else {
-      localStorage.setItem(
+      secureLocalStorage.setItem(
         "Me",
         JSON.stringify({
           ...getMe,
           submittedRecipe: [{ id, ...recipeForm }],
         })
       );
-      const getNewUser = JSON.parse(localStorage.getItem("Me"));
+      const getNewUser = JSON.parse(secureLocalStorage.getItem("Me"));
       const updateUsers = getUsers.map((user) => {
         const updated =
           user?.email === getNewUser?.email
@@ -94,7 +95,7 @@ const CreateRecipe = () => {
             : user;
         return updated;
       });
-      localStorage.setItem("users", JSON.stringify(updateUsers));
+      secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
       setRecipeForm({
         title: "",
         instructions: "",

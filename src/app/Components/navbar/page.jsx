@@ -2,8 +2,9 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import "./style.css";
+import secureLocalStorage from "react-secure-storage";
 const Navbar = () => {
-  const Me = JSON.parse(localStorage.getItem("Me"));
+  const Me = JSON.parse(secureLocalStorage.getItem("Me"));
   return (
     <>
       <header className="navbar">

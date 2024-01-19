@@ -11,12 +11,13 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import "./style.css";
 import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import secureLocalStorage from "react-secure-storage";
 const Profile = () => {
   const router = useRouter();
   const [activeSlide, setActiveSlide] = useState("profile");
-  const Me = JSON.parse(localStorage.getItem("Me"));
+  const Me = JSON.parse(secureLocalStorage.getItem("Me"));
   const handleLogOut = () => {
-    localStorage.removeItem("Me");
+    secureLocalStorage.removeItem("Me");
     router.push("/login");
     router.refresh();
   };

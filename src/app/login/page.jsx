@@ -6,6 +6,7 @@ import Button from "../Components/btn/page";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import secureLocalStorage from "react-secure-storage";
 const Login = () => {
   const {
     register,
@@ -16,7 +17,7 @@ const Login = () => {
   } = useForm();
 
   const router = useRouter();
-  const getUsers = JSON.parse(localStorage.getItem("users"));
+  const getUsers = JSON.parse(secureLocalStorage.getItem("users"));
 
   const handleSubmitData = (data) => {
     if (
@@ -28,7 +29,7 @@ const Login = () => {
       const existingUser = getUsers.find(
         (u) => u.email === data.email && u.password === data?.password
       );
-      localStorage.setItem("Me", JSON.stringify(existingUser));
+      secureLocalStorage.setItem("Me", JSON.stringify(existingUser));
       router.push("/");
       router.refresh();
     } else {

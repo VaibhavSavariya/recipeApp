@@ -19,14 +19,15 @@ import {
 } from "next-share";
 import { InfinitySpin } from "react-loader-spinner";
 import toast from "react-hot-toast";
+import secureLocalStorage from "react-secure-storage";
 const Recipe = () => {
   const params = useParams();
   const [infoLoading, setInfoLoading] = useState(false);
   const [recipeInfo, setRecipeInfo] = useState({});
   const [activeBtn, setActiveBtn] = useState("Instructions");
   const [activeFav, setActiveFav] = useState(false);
-  const getUsers = JSON.parse(localStorage.getItem("users"));
-  const getMe = JSON.parse(localStorage.getItem("Me"));
+  const getUsers = JSON.parse(secureLocalStorage.getItem("users"));
+  const getMe = JSON.parse(secureLocalStorage.getItem("Me"));
   const existingFav = getMe?.favouriteRecipe;
   const FavId = existingFav?.map((recipe) => recipe?.id);
   const getRecipeInfo = async () => {
@@ -47,7 +48,7 @@ const Recipe = () => {
     if (!activeFav && getMe?.favouriteRecipe?.length > 0 && getMe?.email) {
       setActiveFav(!activeFav);
       const newUser = getMe?.favouriteRecipe.map((recipe) => {
-        localStorage.setItem(
+        secureLocalStorage.setItem(
           "Me",
           JSON.stringify({
             ...getMe,
@@ -55,7 +56,7 @@ const Recipe = () => {
           })
         );
       });
-      const getNewUser = JSON.parse(localStorage.getItem("Me"));
+      const getNewUser = JSON.parse(secureLocalStorage.getItem("Me"));
       const updateUsers = getUsers.map((user) => {
         const updated =
           user?.email === getNewUser?.email
@@ -63,17 +64,17 @@ const Recipe = () => {
             : user;
         return updated;
       });
-      localStorage.setItem("users", JSON.stringify(updateUsers));
+      secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
     } else if (getMe?.email) {
       setActiveFav(!activeFav);
-      localStorage.setItem(
+      secureLocalStorage.setItem(
         "Me",
         JSON.stringify({
           ...getMe,
           favouriteRecipe: [recipeInfo],
         })
       );
-      const getNewUser = JSON.parse(localStorage.getItem("Me"));
+      const getNewUser = JSON.parse(secureLocalStorage.getItem("Me"));
       const updateUsers = getUsers.map((user) => {
         const updated =
           user?.email === getNewUser?.email
@@ -81,7 +82,7 @@ const Recipe = () => {
             : user;
         return updated;
       });
-      localStorage.setItem("users", JSON.stringify(updateUsers));
+      secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
       toast.success("Added Successfully!");
     } else {
       toast.error(
@@ -102,11 +103,11 @@ const Recipe = () => {
         const updatedFavorites = updatedFavRecipes.filter(
           (recipe) => recipe.id !== parseInt(params.id)
         );
-        localStorage.setItem(
+        secureLocalStorage.setItem(
           "Me",
           JSON.stringify({ ...getMe, favouriteRecipe: updatedFavorites })
         );
-        const getNewUser = JSON.parse(localStorage.getItem("Me"));
+        const getNewUser = JSON.parse(secureLocalStorage.getItem("Me"));
         const updateUsers = getUsers.map((user) => {
           const updated =
             user?.email === getNewUser?.email
@@ -114,7 +115,7 @@ const Recipe = () => {
               : user;
           return updated;
         });
-        localStorage.setItem("users", JSON.stringify(updateUsers));
+        secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
         toast.error("Removed Successfully!");
       } else {
         null;
