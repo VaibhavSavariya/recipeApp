@@ -2,34 +2,17 @@
 "use client";
 import Link from "next/link";
 import React, { memo, useEffect, useState } from "react";
-import "./style.css";
 import recipes from "../axios/Services/recipes";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { useRouter } from "next/navigation";
-import { InfinitySpin } from "react-loader-spinner";
-
-import "./style.css";
 import SearchBar from "../Components/searchBar/page";
+import { QueryClient, useQuery } from "@tanstack/react-query";
+import "./style.css";
 const Dashboard = () => {
   const router = useRouter();
-  const [recipesData, setRecipesData] = useState([]);
-  const [recipeLoading, setRecipeLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const getRecipes = async () => {
-    setRecipeLoading(true);
-    try {
-      const response = await recipes.getRandomRecipes();
-      if (response?.data?.status !== "failure") {
-        setRecipeLoading(false);
-        setRecipesData(response.data);
-      }
-    } catch (error) {
-      console.log("error:", error);
-      setRecipeLoading(false);
-    }
-  };
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -43,9 +26,17 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    getRecipes();
-  }, []);
+  const { isPending, isError, data, error, isFetching } = useQuery({
+    queryKey: ["recipes"],
+    queryFn: async () => {
+      try {
+        return await recipes.getRandomRecipes();
+      } catch (error) {
+        return error;
+      }
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <>
@@ -59,7 +50,7 @@ const Dashboard = () => {
           getSearchRecipe={getSearchRecipe}
         />
         <div className="recipesContainer">
-          {recipeLoading ? (
+          {isPending ? (
             <div
               style={{
                 display: "flex",
@@ -67,18 +58,13 @@ const Dashboard = () => {
                 alignItems: "center",
               }}
             >
-              <InfinitySpin
-                visible={true}
-                width="200"
-                color="black"
-                ariaLabel="infinity-spin-loading"
-              />
+              <span className="loader" />
             </div>
           ) : (
             <>
               <h1>Popular Recipes...</h1>
               <div className="recipeCards">
-                {recipesData?.recipes?.length > 0 ? (
+                {data?.data?.recipes?.length > 0 ? (
                   <Splide
                     options={{
                       perPage: window.innerWidth <= 768 ? 1 : 4,
@@ -88,9 +74,9 @@ const Dashboard = () => {
                     }}
                   >
                     <>
-                      {recipesData.recipes?.map((recipe, index) => (
+                      {data?.data?.recipes?.map((recipe, index) => (
                         <>
-                          <SplideSlide>
+                          <SplideSlide key={recipe?.id}>
                             <Link
                               className="recipeCard"
                               key={recipe.id}

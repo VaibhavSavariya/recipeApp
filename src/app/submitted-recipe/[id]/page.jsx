@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { InfinitySpin } from "react-loader-spinner";
 import {
   FacebookShareButton,
   InstapaperShareButton,
@@ -135,12 +135,7 @@ const SubmittedRecipe = () => {
               alignItems: "center",
             }}
           >
-            <InfinitySpin
-              visible={true}
-              width="200"
-              color="black"
-              ariaLabel="infinity-spin-loading"
-            />
+            <span className="loader" />
           </div>
         ) : (
           <>

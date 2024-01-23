@@ -1,40 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import recipes from "@/app/axios/Services/recipes";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { useParams, useRouter } from "next/navigation";
-import React, { useState } from "react";
-import "@splidejs/splide/dist/css/splide.min.css";
-import "../../../dashboard/style.css";
-import SearchBar from "@/app/Components/searchBar/page";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-const SearchRecipe = () => {
-  const params = useParams();
+import React, { memo, useState } from "react";
+import recipes from "../axios/Services/recipes";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/splide.min.css";
+import { useRouter } from "next/navigation";
+import SearchBar from "../Components/searchBar/page";
+import { useQuery } from "@tanstack/react-query";
+import "./style.css";
+const Posts = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
   const getSearchRecipe = async (e) => {
     try {
       if (e.key === "Enter") {
         router.push(`/recipe/search/${searchQuery}`);
-        // getSearchRecipe();
       }
     } catch (error) {
       console.log("error:", error);
     }
   };
 
-  const { isPending, data } = useQuery({
-    queryKey: ["filterRecipes", params?.filter],
+  const { isPending, isError, data, error, isFetching } = useQuery({
+    queryKey: ["recipes"],
     queryFn: async () => {
       try {
-        const res = await recipes.getFilterRecipe(params?.filter);
-        return res?.data?.results;
+        return await recipes.getRandomRecipes();
       } catch (error) {
         return error;
       }
@@ -66,21 +62,21 @@ const SearchRecipe = () => {
             </div>
           ) : (
             <>
-              <h1>Filter Results...</h1>
+              <h1>Popular Recipes...</h1>
               <div className="recipeCards">
-                {data?.length > 0 ? (
-                  <>
-                    <Splide
-                      options={{
-                        perPage: window.innerWidth <= 768 ? 1 : 4,
-                        gap: "5rem",
-                        pagination: false,
-                        drag: "free",
-                      }}
-                    >
-                      {data?.map((recipe, index) => (
+                {data?.data?.recipes?.length > 0 ? (
+                  <Splide
+                    options={{
+                      perPage: window.innerWidth <= 768 ? 1 : 4,
+                      gap: "5rem",
+                      pagination: false,
+                      drag: "free",
+                    }}
+                  >
+                    <>
+                      {data?.data?.recipes?.map((recipe, index) => (
                         <>
-                          <SplideSlide>
+                          <SplideSlide key={recipe?.id}>
                             <Link
                               className="recipeCard"
                               key={recipe.id}
@@ -100,8 +96,8 @@ const SearchRecipe = () => {
                           </SplideSlide>
                         </>
                       ))}
-                    </Splide>
-                  </>
+                    </>
+                  </Splide>
                 ) : (
                   <div
                     style={{
@@ -129,4 +125,4 @@ const SearchRecipe = () => {
   );
 };
 
-export default SearchRecipe;
+export default memo(Posts);

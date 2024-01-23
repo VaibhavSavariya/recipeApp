@@ -3,36 +3,21 @@
 import recipes from "@/app/axios/Services/recipes";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "@splidejs/splide/dist/css/splide.min.css";
 import "../../../dashboard/style.css";
-import { InfinitySpin } from "react-loader-spinner";
 import SearchBar from "@/app/Components/searchBar/page";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 const SearchRecipe = () => {
   const params = useParams();
   const router = useRouter();
-  const [recipeLoading, setRecipeLoading] = useState(false);
-  const [searchRecipeData, setSearchRecipeData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const getRecipes = async () => {
-    setRecipeLoading(true);
-    try {
-      const res = await recipes.getSearchRecipe(params?.search);
-      if (res?.data?.status !== "failure") {
-        setRecipeLoading(false);
-        setSearchRecipeData(res?.data?.results);
-      }
-    } catch (error) {
-      setRecipeLoading(false);
-      console.log("error:", error);
-    }
-  };
-  const handleInfo = (id) => {
-    router.push(`/recipe/${id}`);
-  };
+
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
   const getSearchRecipe = async (e) => {
     try {
       if (e.key === "Enter") {
@@ -43,9 +28,19 @@ const SearchRecipe = () => {
       console.log("error:", error);
     }
   };
-  useEffect(() => {
-    getRecipes();
-  }, [params?.search]);
+
+  const { isPending, data } = useQuery({
+    queryKey: ["searchRecipes", params?.search],
+    queryFn: async () => {
+      try {
+        const res = await recipes.getSearchRecipe(params?.search);
+        return res?.data?.results;
+      } catch (error) {
+        return error;
+      }
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <>
@@ -59,7 +54,7 @@ const SearchRecipe = () => {
           getSearchRecipe={getSearchRecipe}
         />
         <div className="recipesContainer">
-          {recipeLoading ? (
+          {isPending ? (
             <div
               style={{
                 display: "flex",
@@ -67,18 +62,13 @@ const SearchRecipe = () => {
                 alignItems: "center",
               }}
             >
-              <InfinitySpin
-                visible={true}
-                width="200"
-                color="black"
-                ariaLabel="infinity-spin-loading"
-              />
+              <span className="loader" />
             </div>
           ) : (
             <>
               <h1>Search Results...</h1>
               <div className="recipeCards">
-                {searchRecipeData.length > 0 ? (
+                {data?.length > 0 ? (
                   <>
                     <Splide
                       options={{
@@ -88,13 +78,13 @@ const SearchRecipe = () => {
                         drag: "free",
                       }}
                     >
-                      {searchRecipeData?.map((recipe, index) => (
+                      {data?.map((recipe, index) => (
                         <>
                           <SplideSlide>
-                            <div
+                            <Link
                               className="recipeCard"
                               key={recipe.id}
-                              onClick={() => handleInfo(recipe?.id)}
+                              href={`/recipe/${recipe?.id}`}
                             >
                               <img
                                 src={recipe.image}
@@ -106,7 +96,7 @@ const SearchRecipe = () => {
                                 }}
                               />
                               <h4>{recipe?.title}</h4>
-                            </div>
+                            </Link>
                           </SplideSlide>
                         </>
                       ))}

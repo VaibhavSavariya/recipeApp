@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./Components/navbar/page";
 import ContextProvider from "./contextProvider";
 import { Toaster } from "react-hot-toast";
+import QueryProvider from "./utils/QueryProvide";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +16,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ContextProvider>
+        <QueryProvider>
           <Toaster />
           <Navbar />
           {children}
-        </ContextProvider>
+        </QueryProvider>
       </body>
     </html>
   );

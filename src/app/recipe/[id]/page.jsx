@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import recipes from "@/app/axios/Services/recipes";
 import Button from "@/app/Components/btn/page";
@@ -17,32 +17,18 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from "next-share";
-import { InfinitySpin } from "react-loader-spinner";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
+import { useQuery } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 const Recipe = () => {
   const params = useParams();
-  const [infoLoading, setInfoLoading] = useState(false);
-  const [recipeInfo, setRecipeInfo] = useState({});
   const [activeBtn, setActiveBtn] = useState("Instructions");
   const [activeFav, setActiveFav] = useState(false);
   const getUsers = JSON.parse(secureLocalStorage.getItem("users"));
   const getMe = JSON.parse(secureLocalStorage.getItem("Me"));
   const existingFav = getMe?.favouriteRecipe;
   const FavId = existingFav?.map((recipe) => recipe?.id);
-  const getRecipeInfo = async () => {
-    setInfoLoading(true);
-    try {
-      const res = await recipes.getRecipeById(params?.id);
-      if (res?.data?.status !== "failure") {
-        setInfoLoading(false);
-        setRecipeInfo(res.data);
-      }
-    } catch (error) {
-      setInfoLoading(false);
-      console.log("error:", error);
-    }
-  };
 
   const handleFav = () => {
     if (!activeFav && getMe?.favouriteRecipe?.length > 0 && getMe?.email) {
@@ -52,7 +38,7 @@ const Recipe = () => {
           "Me",
           JSON.stringify({
             ...getMe,
-            favouriteRecipe: [...existingFav, recipeInfo],
+            favouriteRecipe: [...existingFav, data],
           })
         );
       });
@@ -72,7 +58,7 @@ const Recipe = () => {
         "Me",
         JSON.stringify({
           ...getMe,
-          favouriteRecipe: [recipeInfo],
+          favouriteRecipe: [data],
         })
       );
       const getNewUser = JSON.parse(secureLocalStorage.getItem("Me"));
@@ -125,14 +111,24 @@ const Recipe = () => {
       null;
     }
   };
-  useEffect(() => {
-    getRecipeInfo();
-  }, [params?.id]);
+
+  const { isPending, data } = useQuery({
+    queryKey: ["RecipesInfo", params?.id],
+    queryFn: async () => {
+      try {
+        const res = await recipes.getRecipeById(params?.id);
+        return res?.data;
+      } catch (error) {
+        return error;
+      }
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <>
       <div className="detailWrapper">
-        {infoLoading ? (
+        {isPending ? (
           <div
             style={{
               display: "flex",
@@ -140,18 +136,13 @@ const Recipe = () => {
               alignItems: "center",
             }}
           >
-            <InfinitySpin
-              visible={true}
-              width="200"
-              color="black"
-              ariaLabel="infinity-spin-loading"
-            />
+            <span className="loader" />
           </div>
         ) : (
           <>
             <div className="detailLeft">
-              <h2>{recipeInfo?.title}</h2>
-              <img alt="recipe-logo" src={recipeInfo?.image} width="100px" />
+              <h2>{data?.title}</h2>
+              <img alt="recipe-logo" src={data?.image} width="100px" />
               <p
                 style={{
                   display: "flex",
@@ -239,13 +230,13 @@ const Recipe = () => {
                   className="instructions"
                 >
                   <p
-                    dangerouslySetInnerHTML={{ __html: recipeInfo?.summary }}
+                    dangerouslySetInnerHTML={{ __html: data?.summary }}
                     className="description"
                   ></p>
                   <p> ------ </p>
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: recipeInfo?.instructions,
+                      __html: data?.instructions,
                     }}
                     className="description"
                   ></p>
@@ -258,7 +249,7 @@ const Recipe = () => {
                     width: window.innerWidth <= 768 ? "300px" : "500px",
                   }}
                 >
-                  {recipeInfo?.extendedIngredients?.map((ingredient, index) => (
+                  {data?.extendedIngredients?.map((ingredient, index) => (
                     <li
                       style={{
                         marginBottom: "5px",
@@ -278,4 +269,4 @@ const Recipe = () => {
   );
 };
 
-export default Recipe;
+export default dynamic(() => Promise.resolve(Recipe), { ssr: false });
