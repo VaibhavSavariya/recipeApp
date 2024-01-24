@@ -122,7 +122,7 @@ const Recipe = () => {
         return error;
       }
     },
-    refetchOnWindowFocus: false,
+    enabled: !!params?.id,
   });
 
   return (

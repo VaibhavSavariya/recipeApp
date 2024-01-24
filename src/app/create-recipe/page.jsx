@@ -1,59 +1,30 @@
 "use client";
 import React, { useRef, useState } from "react";
-import "./style.css";
 import Button from "../Components/btn/page";
 import { GrUpload } from "react-icons/gr";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import "./style.css";
 
 const CreateRecipe = () => {
   const imageRef = useRef();
-  const [recipeForm, setRecipeForm] = useState({
-    title: "",
-    instructions: "",
-    ingredients: [],
-    summary: "",
-    image: "",
-  });
-
+  const [image, setImage] = useState("");
   /** JSON DATA **/
   const getUsers = JSON.parse(secureLocalStorage.getItem("users"));
   const getMe = JSON.parse(secureLocalStorage.getItem("Me"));
   const existingSub = getMe?.submittedRecipe;
 
-  const handleIngredients = () => {
-    setRecipeForm({
-      ...recipeForm,
-      ingredients: [...recipeForm?.ingredients, ""],
-    });
-  };
-
-  const handleChange = (e) => {
-    setRecipeForm({
-      ...recipeForm,
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  const handleChangeIngredient = (e, index) => {
-    const { value } = e.target;
-    const ingredients = recipeForm?.ingredients;
-    ingredients[index] = value;
-
-    setRecipeForm({
-      ...recipeForm,
-      ingredients,
-    });
-  };
-
-  const handleSubmitData = (e) => {
-    e.preventDefault();
+  const handleSubmitData = (recipeForm) => {
     const id = Math.floor(Math.random() * 1000) + "UUID";
     if (getMe?.submittedRecipe?.length > 0) {
       const newRecipe = {
         id,
         ...recipeForm,
+        image: image,
       };
       const newUser = getMe?.submittedRecipe.map((recipe) => {
         secureLocalStorage.setItem(
@@ -73,18 +44,12 @@ const CreateRecipe = () => {
         return updated;
       });
       secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
-      setRecipeForm({
-        title: "",
-        instructions: "",
-        ingredients: [],
-        summary: "",
-      });
     } else {
       secureLocalStorage.setItem(
         "Me",
         JSON.stringify({
           ...getMe,
-          submittedRecipe: [{ id, ...recipeForm }],
+          submittedRecipe: [{ id, ...recipeForm, image: image }],
         })
       );
       const getNewUser = JSON.parse(secureLocalStorage.getItem("Me"));
@@ -96,14 +61,9 @@ const CreateRecipe = () => {
         return updated;
       });
       secureLocalStorage.setItem("users", JSON.stringify(updateUsers));
-      setRecipeForm({
-        title: "",
-        instructions: "",
-        ingredients: [],
-        summary: "",
-      });
     }
     toast.success("Recipe Created Successfully!");
+    setImage("");
   };
 
   const handleImageUpload = (e) => {
@@ -114,6 +74,7 @@ const CreateRecipe = () => {
 
       reader.onloadend = () => {
         const imageData = reader.result;
+        setImage(imageData);
         setRecipeForm({ ...recipeForm, image: imageData });
       };
 
@@ -126,104 +87,168 @@ const CreateRecipe = () => {
       <div className="recipe-form-container">
         <h4>Create a Recipe </h4>
         <div className="form-header">
-          <form className="recipe-form" onSubmit={handleSubmitData}>
-            <div className="imgBtn">
-              <input
-                type="file"
-                ref={imageRef}
-                hidden
-                accept="images/*"
-                onChange={handleImageUpload}
-              />
-              <div
-                className="upload-icon"
-                onClick={() => imageRef.current.click()}
-              >
-                <GrUpload />
-              </div>
-              {!recipeForm?.image && <p>Choose file to upload</p>}
-              {recipeForm?.image && (
-                <Image
-                  src={recipeForm?.image}
-                  alt="recipe-image"
-                  width={100}
-                  height={80}
+          <Formik
+            initialValues={{
+              title: "",
+              instructions: "",
+              ingredients: [],
+              summary: "",
+              image: "",
+            }}
+            validationSchema={Yup.object({
+              title: Yup.string()
+                .min(3, "Minimum 3 characters or more")
+                .required("this field is required"),
+              instructions: Yup.string()
+                .max(200, "Maximum 200 characters or less")
+                .required("this field is required"),
+              ingredients: Yup.array().required("At least add one ingrdients"),
+              summary: Yup.string()
+                .max(200, "Maximum 200 characters or less")
+                .required("this field is required"),
+            })}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              setTimeout(() => {
+                console.log("values:", { ...values, image: image });
+                handleSubmitData(values);
+                setSubmitting(false);
+                resetForm();
+              }, 400);
+            }}
+          >
+            {({ values, setSubmitting }) => (
+              <Form className="recipe-form">
+                <div className="imgBtn">
+                  <input
+                    type="file"
+                    ref={imageRef}
+                    hidden
+                    accept="images/*"
+                    onChange={handleImageUpload}
+                  />
+                  <div
+                    className="upload-icon"
+                    onClick={() => imageRef.current.click()}
+                  >
+                    <GrUpload />
+                  </div>
+                  {!image && <p>Choose file to upload</p>}
+                  {image && (
+                    <Image
+                      src={image}
+                      alt="recipe-image"
+                      width={100}
+                      height={80}
+                      style={{
+                        borderRadius: "10px",
+                        height: "80px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  )}
+                </div>
+                <label htmlFor="title">Title</label>
+                <Field name="title" type="text" />
+                <ErrorMessage
+                  name="title"
+                  render={(msg) => (
+                    <p
+                      style={{
+                        color: "red",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {msg}
+                    </p>
+                  )}
+                />
+                <label htmlFor="instructions">Instructions</label>
+                <Field
+                  name="instructions"
+                  as="textarea"
+                  rows="4"
+                  cols="50"
                   style={{
+                    border: "1px solid #f3f3f3",
                     borderRadius: "10px",
-                    height: "80px",
-                    objectFit: "cover",
+                    padding: "5px",
                   }}
                 />
-              )}
-            </div>
-            <label htmlFor="title">Title</label>
-            <input
-              id="title"
-              type="text"
-              placeholder="Enter title"
-              onChange={handleChange}
-              value={recipeForm?.title}
-              required
-            />
-            {recipeForm?.title.length < 0 && (
-              <span
-                style={{
-                  fontStyle: "italic",
-                  color: "red",
-                  fontSize: "12px",
-                  marginTop: "-18px",
-                }}
-              >
-                Please enter title.
-              </span>
+                <ErrorMessage
+                  name="instructions"
+                  render={(msg) => (
+                    <p
+                      style={{
+                        color: "red",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {msg}
+                    </p>
+                  )}
+                />
+                <FieldArray name="ingredients">
+                  {({ insert, remove, push }) => (
+                    <>
+                      {values?.ingredients.map((ingredient, index) => (
+                        <>
+                          <div className="fieldArray">
+                            <Field
+                              key={index}
+                              name={`ingredients.${index}.ingredient`}
+                              placeholder="Add Ingredient"
+                            />
+                            <IoCloseCircleOutline
+                              onClick={() => remove(index)}
+                              size={26}
+                              className="deleteBtn"
+                            />
+                          </div>
+                        </>
+                      ))}
+                      <Button type="button" onClick={() => push("")}>
+                        Add Ingredients
+                      </Button>
+                    </>
+                  )}
+                </FieldArray>
+                <label htmlFor="summary">Summary</label>
+                <Field
+                  name="summary"
+                  as="textarea"
+                  rows="4"
+                  cols="50"
+                  style={{
+                    border: "1px solid #f3f3f3",
+                    borderRadius: "10px",
+                    padding: "5px",
+                  }}
+                />
+                <ErrorMessage
+                  name="summary"
+                  render={(msg) => (
+                    <p
+                      style={{
+                        color: "red",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {msg}
+                    </p>
+                  )}
+                />
+                <Button
+                  style={{
+                    width: "200px",
+                  }}
+                  type="submit"
+                  disabled={!setSubmitting}
+                >
+                  Submit Recipe
+                </Button>
+              </Form>
             )}
-            <label htmlFor="instructions">Instructions</label>
-            <textarea
-              type="text"
-              id="instructions"
-              rows="4"
-              cols="50"
-              placeholder=" Enter instructions"
-              onChange={handleChange}
-              value={recipeForm?.instructions}
-              required
-            />
-
-            {recipeForm?.ingredients.map((ingredient, index) => (
-              <input
-                id="ingredients"
-                type="text"
-                key={index}
-                placeholder="Please add ingredient"
-                // value={ingredient}
-                onChange={(e) => handleChangeIngredient(e, index)}
-                required
-              />
-            ))}
-            <Button type="button" onClick={handleIngredients}>
-              Add Ingredients
-            </Button>
-            <label htmlFor="summary">Summary</label>
-            <textarea
-              type="text"
-              id="summary"
-              rows="4"
-              cols="50"
-              placeholder=" Enter summary"
-              onChange={handleChange}
-              value={recipeForm?.summary}
-              required
-            />
-
-            <Button
-              style={{
-                width: "200px",
-              }}
-              type="submit"
-            >
-              Submit Recipe
-            </Button>
-          </form>
+          </Formik>
         </div>
       </div>
     </>

@@ -264,7 +264,7 @@ const SubmittedRecipe = () => {
                       }}
                       key={index}
                     >
-                      {ingredient}{" "}
+                      {ingredient?.ingredient}{" "}
                     </li>
                   ))}
                 </ul>

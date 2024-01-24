@@ -39,7 +39,7 @@ const SearchRecipe = () => {
         return error;
       }
     },
-    refetchOnWindowFocus: false,
+    enabled: !!params?.filter,
   });
 
   return (

@@ -35,7 +35,6 @@ const Dashboard = () => {
         return error;
       }
     },
-    refetchOnWindowFocus: false,
   });
 
   return (

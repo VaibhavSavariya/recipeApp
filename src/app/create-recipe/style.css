@@ -16,10 +16,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 20px;
+  gap: 10px;
   padding: 20px;
   width: 50%;
   font-size: 12px;
+}
+.fieldArray {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.deleteBtn {
+  cursor: pointer;
 }
 
 .recipe-form input {
