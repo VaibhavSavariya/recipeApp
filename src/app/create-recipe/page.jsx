@@ -75,7 +75,6 @@ const CreateRecipe = () => {
       reader.onloadend = () => {
         const imageData = reader.result;
         setImage(imageData);
-        setRecipeForm({ ...recipeForm, image: imageData });
       };
 
       reader.readAsDataURL(file);
