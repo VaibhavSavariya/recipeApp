@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./style.css";
 import Link from "next/link";
-import Button from "../Components/btn/page";
+import Button from "../../Components/btn/page";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -90,7 +90,7 @@ const Login = () => {
         <p>
           Dont have an account?
           <span className="signup-link">
-            <Link href={"/signup"}>Sign up</Link>
+            <Link href={"/auth/signup"}>Sign up</Link>
           </span>{" "}
         </p>
       </div>

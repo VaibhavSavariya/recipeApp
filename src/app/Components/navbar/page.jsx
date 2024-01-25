@@ -18,7 +18,7 @@ const Navbar = () => {
           ) : (
             <>
               {/* <Link href={"/about"}>About</Link> */}
-              <Link href={"/login"}>Login</Link>
+              <Link href={"/auth/login"}>Login</Link>
             </>
           )}
         </div>

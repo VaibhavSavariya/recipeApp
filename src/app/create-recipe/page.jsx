@@ -134,6 +134,8 @@ const CreateRecipe = () => {
                   {!image && <p>Choose file to upload</p>}
                   {image && (
                     <Image
+                      blurDataURL={image}
+                      placeholder="blur"
                       src={image}
                       alt="recipe-image"
                       width={100}

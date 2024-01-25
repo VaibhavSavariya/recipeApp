@@ -12,15 +12,31 @@ import "./style.css";
 import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import secureLocalStorage from "react-secure-storage";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 const Profile = () => {
   const router = useRouter();
   const [activeSlide, setActiveSlide] = useState("profile");
   const Me = JSON.parse(secureLocalStorage.getItem("Me"));
   const handleLogOut = () => {
     secureLocalStorage.removeItem("Me");
-    router.push("/login");
+    router.push("/auth/login");
     router.refresh();
   };
+  useInfiniteQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      axios
+        .get("https://jsonplaceholder.typicode.com/users", {
+          params: {
+            _page: 1,
+            _limit: 4,
+          },
+        })
+        .then((res) => res.data),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+  });
   return (
     <>
       <div className="profile-container">
