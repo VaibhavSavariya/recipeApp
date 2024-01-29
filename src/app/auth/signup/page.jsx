@@ -28,7 +28,7 @@ const Signup = () => {
         "users",
         JSON.stringify([...getUsers, newUser])
       );
-      router.push("/login");
+      router.push("/auth/login");
       toast.success("Register Successfully!");
     } else {
       toast.error("User already exists. Please login.");
