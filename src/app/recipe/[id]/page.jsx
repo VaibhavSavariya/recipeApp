@@ -18,9 +18,12 @@ import {
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
 import { useQuery } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import recipes from "../../axios/Services/recipes";
 import Button from "@/app/Components/btn/page";
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
 const Recipe = () => {
   const params = useParams();
   const [activeBtn, setActiveBtn] = useState("Instructions");
@@ -269,4 +272,4 @@ const Recipe = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(Recipe), { ssr: false });
+export default Recipe;
