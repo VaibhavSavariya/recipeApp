@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import "./style.css";
 import Link from "next/link";
-import {Button} from "../../Components/btn/page";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
+import Button from "@/app/Components/btn/page";
 const Login = () => {
   const {
     register,

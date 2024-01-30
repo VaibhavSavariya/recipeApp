@@ -15,10 +15,10 @@ import { FaInstagram } from "react-icons/fa6";
 import { FaWhatsapp } from "react-icons/fa6";
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
-import { Button } from "../../Components/btn/page";
 import "./style.css";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
+import Button from "@/app/Components/btn/page";
 const SubmittedRecipe = () => {
   const params = useParams();
   const [infoLoading, setInfoLoading] = useState(false);

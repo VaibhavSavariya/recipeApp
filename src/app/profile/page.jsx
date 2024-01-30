@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
-import {Button} from "../Components/btn/page";
 import { useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 import { MdFavoriteBorder } from "react-icons/md";
@@ -14,6 +13,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import secureLocalStorage from "react-secure-storage";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Button from "../Components/btn/page";
 const Profile = () => {
   const router = useRouter();
   const [activeSlide, setActiveSlide] = useState("profile");

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import "./style.css";
-export const Button = ({ type, children, onClick, className, style }) => {
+const Button = ({ type, children, onClick, className, style }) => {
   return (
     <>
       <button
@@ -15,3 +15,5 @@ export const Button = ({ type, children, onClick, className, style }) => {
     </>
   );
 };
+
+export default Button;
