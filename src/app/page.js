@@ -1,15 +1,14 @@
+"use server";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import recipes from "./axios/Services/recipes";
 import { getRandomRecipesData } from "./utils/queryFunctions";
-import dynamic from "next/dynamic";
-const Dashboard = dynamic(() => import("./dashboard/dashboard"), {
-  ssr: false,
-});
+import Dashboard from "./dashboard/dashboard";
+
 export default async function Home() {
+  "use server";
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

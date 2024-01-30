@@ -60,10 +60,15 @@ const Dashboard = () => {
                 {data?.recipes?.length > 0 ? (
                   <Splide
                     options={{
-                      perPage: window.innerWidth <= 768 ? 1 : 4,
+                      perPage: 4,
                       gap: "5rem",
                       pagination: false,
                       drag: "free",
+                      breakpoints: {
+                        768: {
+                          perPage: 1,
+                        },
+                      },
                     }}
                   >
                     <>
