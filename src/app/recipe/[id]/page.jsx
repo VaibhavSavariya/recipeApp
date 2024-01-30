@@ -21,7 +21,13 @@ import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import recipes from "../../axios/Services/recipes";
 import Button from "@/app/Components/btn/page";
-const Recipe = () => {
+
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
+const Recipe = ({ paramsData }) => {
+  const { id } = paramsData;
+  console.log("id:", id);
   const params = useParams();
   const [activeBtn, setActiveBtn] = useState("Instructions");
   const [activeFav, setActiveFav] = useState(false);

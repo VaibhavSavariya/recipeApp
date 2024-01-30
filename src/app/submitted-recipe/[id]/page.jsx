@@ -19,7 +19,13 @@ import "./style.css";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
 import Button from "@/app/Components/btn/page";
-const SubmittedRecipe = () => {
+
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
+
+const SubmittedRecipe = ({ paramsData }) => {
+  const { id } = paramsData;
   const params = useParams();
   const [infoLoading, setInfoLoading] = useState(false);
   const [recipeInfo, setRecipeInfo] = useState({});

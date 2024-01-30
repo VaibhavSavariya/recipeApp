@@ -9,7 +9,12 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import recipes from "../../../axios/Services/recipes";
 import SearchBar from "../../../Components/searchBar/page";
-const SearchRecipe = () => {
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
+
+const SearchRecipe = ({ paramsData }) => {
+  const { id } = paramsData;
   const params = useParams();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
