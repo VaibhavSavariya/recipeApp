@@ -28,9 +28,8 @@ const Dashboard = () => {
 
   const { isPending, isError, data, error, isFetching } = useQuery({
     queryKey: ["recipes"],
-    queryFn: getRandomRecipesData,
+    // queryFn: getRandomRecipesData,
   });
-
   return (
     <>
       <div

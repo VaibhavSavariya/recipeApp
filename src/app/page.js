@@ -1,4 +1,3 @@
-"use server";
 import {
   HydrationBoundary,
   QueryClient,
@@ -16,11 +15,11 @@ export default async function Home() {
   });
   return (
     <>
-      <main>
-        <HydrationBoundary state={dehydrate(queryClient)}>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <main>
           <Dashboard />
-        </HydrationBoundary>
-      </main>
+        </main>
+      </HydrationBoundary>
     </>
   );
 }
