@@ -1,3 +1,4 @@
+"use server";
 import {
   HydrationBoundary,
   QueryClient,
@@ -7,7 +8,6 @@ import { getRandomRecipesData } from "./utils/queryFunctions";
 import Dashboard from "./dashboard/dashboard";
 
 export default async function Home() {
-  "use server";
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
