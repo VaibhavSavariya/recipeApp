@@ -6,7 +6,7 @@ import {
 import { getRandomRecipesData } from "./utils/queryFunctions";
 import Dashboard from "./dashboard/dashboard";
 
-export async function Home() {
+const Home = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
@@ -22,4 +22,6 @@ export async function Home() {
       </main>
     </>
   );
-}
+};
+
+export default Home;
