@@ -3,12 +3,9 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import recipes from "./axios/Services/recipes";
 import { getRandomRecipesData } from "./utils/queryFunctions";
-import dynamic from "next/dynamic";
-const Dashboard = dynamic(() => import("./dashboard/dashboard"), {
-  ssr: false,
-});
+import Dashboard from "./dashboard/dashboard";
+
 export default async function Home() {
   const queryClient = new QueryClient();
 
