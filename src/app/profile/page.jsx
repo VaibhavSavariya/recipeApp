@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
-import Button from "../Components/btn/page";
+import {Button} from "../Components/btn/page";
 import { useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 import { MdFavoriteBorder } from "react-icons/md";

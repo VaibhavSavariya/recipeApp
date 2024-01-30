@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import Button from "../Components/btn/page";
+import {Button} from "../Components/btn/page";
 import { GrUpload } from "react-icons/gr";
 import Image from "next/image";
 import toast from "react-hot-toast";

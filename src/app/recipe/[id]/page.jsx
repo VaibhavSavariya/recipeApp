@@ -20,7 +20,7 @@ import secureLocalStorage from "react-secure-storage";
 import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import recipes from "../../axios/Services/recipes";
-import Button from "../../Components/btn/page";
+import { Button } from "../../Components/btn/page";
 const Recipe = () => {
   const params = useParams();
   const [activeBtn, setActiveBtn] = useState("Instructions");

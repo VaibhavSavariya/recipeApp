@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import "./style.css";
-import Button from "../../Components/btn/page";
+import { Button } from "../../Components/btn/page";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
