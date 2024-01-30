@@ -9,8 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import recipes from "../../../axios/Services/recipes";
 import SearchBar from "../../../Components/searchBar/page";
-export const dynamic = "force-static";
-export const dynamicParams = false;
 const SearchRecipe = () => {
   const params = useParams();
   const router = useRouter();

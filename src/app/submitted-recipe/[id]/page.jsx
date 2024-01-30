@@ -19,9 +19,6 @@ import "./style.css";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
 import Button from "@/app/Components/btn/page";
-
-export const dynamic = "force-static";
-export const dynamicParams = false;
 const SubmittedRecipe = () => {
   const params = useParams();
   const [infoLoading, setInfoLoading] = useState(false);
