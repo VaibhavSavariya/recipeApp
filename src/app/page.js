@@ -15,11 +15,11 @@ export async function Home() {
   });
   return (
     <>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <main>
+      <main>
+        <HydrationBoundary state={dehydrate(queryClient)}>
           <Dashboard />
-        </main>
-      </HydrationBoundary>
+        </HydrationBoundary>
+      </main>
     </>
   );
 }
