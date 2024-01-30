@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
-import React, { memo, useEffect, useState } from "react";
-import recipes from "../axios/Services/recipes";
+import React, { memo, useState } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { useRouter } from "next/navigation";
 import SearchBar from "../Components/searchBar/page";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import "./style.css";
 import { getRandomRecipesData } from "../utils/queryFunctions";
 const Dashboard = () => {
