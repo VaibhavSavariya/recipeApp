@@ -2,8 +2,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useParams } from "next/navigation";
-import recipes from "@/app/axios/Services/recipes";
-import Button from "@/app/Components/btn/page";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
@@ -21,6 +19,8 @@ import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
 import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
+import recipes from "../../axios/Services/recipes";
+import Button from "../../Components/btn/page";
 const Recipe = () => {
   const params = useParams();
   const [activeBtn, setActiveBtn] = useState("Instructions");

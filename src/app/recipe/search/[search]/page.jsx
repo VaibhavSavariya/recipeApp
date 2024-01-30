@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import recipes from "@/app/axios/Services/recipes";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import "@splidejs/splide/dist/css/splide.min.css";
 import "../../../dashboard/style.css";
-import SearchBar from "@/app/Components/searchBar/page";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import recipes from "../../../axios/Services/recipes";
+import SearchBar from "../../../Components/searchBar/page";
 const SearchRecipe = () => {
   const params = useParams();
   const router = useRouter();

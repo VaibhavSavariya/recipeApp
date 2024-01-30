@@ -108,7 +108,6 @@ const CreateRecipe = () => {
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setTimeout(() => {
-                console.log("values:", { ...values, image: image });
                 handleSubmitData(values);
                 setSubmitting(false);
                 resetForm();

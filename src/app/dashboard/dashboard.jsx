@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import SearchBar from "../Components/searchBar/page";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import "./style.css";
+import { getRandomRecipesData } from "../utils/queryFunctions";
 const Dashboard = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,13 +29,7 @@ const Dashboard = () => {
 
   const { isPending, isError, data, error, isFetching } = useQuery({
     queryKey: ["recipes"],
-    queryFn: async () => {
-      try {
-        return await recipes.getRandomRecipes();
-      } catch (error) {
-        return error;
-      }
-    },
+    queryFn: getRandomRecipesData,
   });
 
   return (
@@ -63,7 +58,7 @@ const Dashboard = () => {
             <>
               <h1>Popular Recipes...</h1>
               <div className="recipeCards">
-                {data?.data?.recipes?.length > 0 ? (
+                {data?.recipes?.length > 0 ? (
                   <Splide
                     options={{
                       perPage: window.innerWidth <= 768 ? 1 : 4,
@@ -73,7 +68,7 @@ const Dashboard = () => {
                     }}
                   >
                     <>
-                      {data?.data?.recipes?.map((recipe, index) => (
+                      {data?.recipes?.map((recipe, index) => (
                         <>
                           <SplideSlide key={recipe?.id}>
                             <Link

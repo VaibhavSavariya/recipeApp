@@ -6,7 +6,6 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import { useState } from "react";
 export default function QueryProvider({ children }) {
   const [queryClient] = useState(
@@ -15,13 +14,14 @@ export default function QueryProvider({ children }) {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
+            staleTime: 60 * 1000,
           },
         },
       })
   );
   return (
     <QueryClientProvider client={queryClient}>
-      <HydrationBoundary state={queryClient}>{children}</HydrationBoundary>
+      {children}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
