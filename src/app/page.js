@@ -6,7 +6,7 @@ import {
 import { getRandomRecipesData } from "./utils/queryFunctions";
 import Dashboard from "./dashboard/dashboard";
 
-export default async function Home() {
+export async function Home() {
   "use server";
   const queryClient = new QueryClient();
 
