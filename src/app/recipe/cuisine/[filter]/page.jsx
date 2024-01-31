@@ -52,6 +52,7 @@ const SearchRecipe = () => {
         <SearchBar
           handleChange={handleChange}
           getSearchRecipe={getSearchRecipe}
+          isActive={params?.filter}
         />
         <div className="recipesContainer">
           {isPending ? (
