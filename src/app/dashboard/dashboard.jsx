@@ -26,7 +26,7 @@ const Dashboard = () => {
     }
   };
 
-  const { isPending, isError, data, error, isFetching } = useQuery({
+  const { isPending, data } = useQuery({
     queryKey: ["recipes"],
     queryFn: getRandomRecipesData,
   });
