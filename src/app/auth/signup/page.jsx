@@ -1,13 +1,16 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import "./style.css";
+import "../login/style.css";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
 import Button from "@/app/Components/btn/page";
+import { useTheme } from "next-themes";
 const Signup = () => {
+  const { theme } = useTheme();
+
   const {
     register,
     handleSubmit,
@@ -36,14 +39,22 @@ const Signup = () => {
   };
   return (
     <>
-      <div className="userContainer">
-        <h1>Register Yourself!</h1>
+      <div className={theme === "dark" ? "userContainerDark" : "userContainer"}>
+        <h1 className={theme === "dark" ? "h1-black" : "h1"}>
+          Register Yourself!
+        </h1>
         <form
           className="loginform"
           onSubmit={handleSubmit((data) => handleSubmitData(data))}
         >
-          <label htmlFor="username">Username</label>
+          <label
+            className={theme === "dark" ? "login-label-dark" : ""}
+            htmlFor="username"
+          >
+            Username
+          </label>
           <input
+            className={theme === "dark" ? "login-input-black" : "login-input"}
             id="username"
             type="text"
             placeholder="Enter Username"
@@ -61,8 +72,14 @@ const Signup = () => {
               {errors?.username?.message}
             </span>
           )}
-          <label htmlFor="email">Email</label>
+          <label
+            className={theme === "dark" ? "login-label-dark" : ""}
+            htmlFor="email"
+          >
+            Email
+          </label>
           <input
+            className={theme === "dark" ? "login-input-black" : "login-input"}
             id="email"
             type="email"
             placeholder=" Enter Email"
@@ -80,8 +97,14 @@ const Signup = () => {
               {errors?.email?.message}
             </span>
           )}
-          <label htmlFor="password">Password</label>
+          <label
+            className={theme === "dark" ? "login-label-dark" : ""}
+            htmlFor="password"
+          >
+            Password
+          </label>
           <input
+            className={theme === "dark" ? "login-input-black" : "login-input"}
             id="password"
             type="password"
             placeholder=" Enter Password"
@@ -105,9 +128,14 @@ const Signup = () => {
               {errors?.password?.message}
             </span>
           )}
-          <Button type="submit">Sign up</Button>
+          <Button
+            className={theme === "dark" ? "loginBtnDark" : ""}
+            type="submit"
+          >
+            Sign up
+          </Button>
         </form>
-        <p>
+        <p className={theme === "dark" ? "p-black" : ""}>
           Already have an account?
           <span className="signup-link">
             <Link href={"/auth/login"}>Login</Link>

@@ -1,3 +1,35 @@
+.p-black {
+  color: white;
+}
+.pf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.pf-black {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.h-black {
+  font-size: 14px !important;
+  margin-top: 20px;
+  color: white;
+}
+.h-white {
+  font-size: 14px !important;
+  margin-top: 20px;
+}
 .detailWrapper {
   display: flex;
   justify-content: space-evenly;
@@ -50,9 +82,17 @@
 .instructions {
   width: 500px;
 }
+.instructions-black {
+  width: 500px;
+}
 .description {
   text-align: justify;
   padding: 12px;
+}
+.descriptionBlack {
+  text-align: justify;
+  padding: 12px;
+  color: white;
 }
 
 .active {
@@ -75,6 +115,21 @@
   border: 2px solid #555555;
 }
 
+.instructions-black::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #000000;
+}
+
+.instructions-black::-webkit-scrollbar {
+  width: 5px;
+  background-color: #000000;
+}
+
+.instructions-black::-webkit-scrollbar-thumb {
+  background-color: #f3f3f3;
+  /* border: 2px solid #555555; */
+}
+
 .social-wrapper {
   display: flex;
   justify-content: flex-start;
@@ -90,18 +145,24 @@
   cursor: pointer;
   border-radius: 5px;
 }
-.social-btn {
+.social-btn-black {
   height: 32px;
   width: 32px;
-  border: 1px solid #f3f3f3;
   padding: 5px;
   cursor: pointer;
   border-radius: 5px;
+  color: white;
 }
 .fav-btn {
   height: 32px;
   width: 32px;
   cursor: pointer;
+}
+.fav-btn-black {
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  color: white;
 }
 
 @media only screen and (max-width: 768px) {
@@ -112,6 +173,9 @@
     align-items: center;
   }
   .instructions {
+    width: auto;
+  }
+  .instructions-black {
     width: auto;
   }
 }

@@ -9,7 +9,11 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import recipes from "../../../axios/Services/recipes";
 import SearchBar from "../../../Components/searchBar/page";
+import Image from "next/image";
+import noDataImage from "../../../../../public/No data-amico.png";
+import { useTheme } from "next-themes";
 const SearchRecipe = () => {
+  const { theme } = useTheme();
   const params = useParams();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,6 +54,7 @@ const SearchRecipe = () => {
         }}
       >
         <SearchBar
+          theme={theme}
           handleChange={handleChange}
           getSearchRecipe={getSearchRecipe}
         />
@@ -62,7 +67,7 @@ const SearchRecipe = () => {
                 alignItems: "center",
               }}
             >
-              <span className="loader" />
+              <span className={theme === "dark" ? "loader-dark" : "loader"} />
             </div>
           ) : (
             <>
@@ -110,13 +115,11 @@ const SearchRecipe = () => {
                       alignItems: "center",
                     }}
                   >
-                    <img
-                      src="https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg"
+                    <Image
+                      src={noDataImage}
                       alt="no data icon"
-                      style={{
-                        height: "200px",
-                        width: "200px",
-                      }}
+                      width={300}
+                      height={300}
                     />
                   </div>
                 )}

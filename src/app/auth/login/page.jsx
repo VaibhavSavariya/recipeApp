@@ -7,7 +7,10 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import secureLocalStorage from "react-secure-storage";
 import Button from "@/app/Components/btn/page";
+import { useTheme } from "next-themes";
 const Login = () => {
+  const { theme } = useTheme();
+
   const {
     register,
     handleSubmit,
@@ -41,14 +44,20 @@ const Login = () => {
 
   return (
     <>
-      <div className="userContainer">
-        <h1>Welcome Back!</h1>
+      <div className={theme === "dark" ? "userContainerDark" : "userContainer"}>
+        <h1 className={theme === "dark" ? "h1-black" : "h1"}>Welcome Back!</h1>
         <form
           className="loginform"
           onSubmit={handleSubmit((data) => handleSubmitData(data))}
         >
-          <label htmlFor="email">Email</label>
+          <label
+            className={theme === "dark" ? "login-label-dark" : ""}
+            htmlFor="email"
+          >
+            Email
+          </label>
           <input
+            className={theme === "dark" ? "login-input-black" : "login-input"}
             id="email"
             type="email"
             placeholder="Enter Email"
@@ -66,8 +75,14 @@ const Login = () => {
               Please enter email.
             </span>
           )}
-          <label htmlFor="password">Password</label>
+          <label
+            className={theme === "dark" ? "login-label-dark" : ""}
+            htmlFor="password"
+          >
+            Password
+          </label>
           <input
+            className={theme === "dark" ? "login-input-black" : "login-input"}
             id="password"
             type="password"
             placeholder="Enter Password"
@@ -85,9 +100,14 @@ const Login = () => {
               Please enter password.
             </span>
           )}
-          <Button type="submit">Login</Button>
+          <Button
+            className={theme === "dark" ? "loginBtnDark" : ""}
+            type="submit"
+          >
+            Login
+          </Button>
         </form>
-        <p>
+        <p className={theme === "dark" ? "p-black" : ""}>
           Dont have an account?
           <span className="signup-link">
             <Link href={"/auth/signup"}>Sign up</Link>

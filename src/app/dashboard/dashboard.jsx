@@ -9,7 +9,11 @@ import SearchBar from "../Components/searchBar/page";
 import { useQuery } from "@tanstack/react-query";
 import "./style.css";
 import { getRandomRecipesData } from "../utils/queryFunctions";
+import noDataImage from "../../../public/No data-amico.png";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 const Dashboard = () => {
+  const { theme } = useTheme();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -39,6 +43,7 @@ const Dashboard = () => {
         }}
       >
         <SearchBar
+          theme={theme}
           handleChange={handleChange}
           getSearchRecipe={getSearchRecipe}
         />
@@ -51,11 +56,13 @@ const Dashboard = () => {
                 alignItems: "center",
               }}
             >
-              <span className="loader" />
+              <span className={theme === "dark" ? "loader-dark" : "loader"} />
             </div>
           ) : (
             <>
-              <h1>Popular Recipes...</h1>
+              <h1 className={theme === "dark" ? "h1-dark" : "h1"}>
+                Popular Recipes...
+              </h1>
               <div className="recipeCards">
                 {data?.recipes?.length > 0 ? (
                   <Splide
@@ -104,13 +111,11 @@ const Dashboard = () => {
                       alignItems: "center",
                     }}
                   >
-                    <img
-                      src="https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg"
+                    <Image
+                      src={noDataImage}
                       alt="no data icon"
-                      style={{
-                        height: "200px",
-                        width: "200px",
-                      }}
+                      width={300}
+                      height={300}
                     />
                   </div>
                 )}

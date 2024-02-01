@@ -17,6 +17,7 @@
     "formik": "^2.4.5",
     "next": "14.0.4",
     "next-share": "^0.27.0",
+    "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",

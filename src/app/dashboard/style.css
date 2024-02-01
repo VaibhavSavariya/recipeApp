@@ -1,10 +1,16 @@
 .recipesContainer {
   margin: 50px;
 }
-.recipesContainer h1 {
+.h1 {
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: 600;
+}
+.h1-dark {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
 }
 .recipeCard {
   display: flex;

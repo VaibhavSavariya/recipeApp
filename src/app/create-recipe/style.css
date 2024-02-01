@@ -6,9 +6,18 @@
   flex-direction: column;
   margin: 20px 100px;
 }
-.recipe-form-container h4 {
+.h-black {
   font-size: 24px;
   font-weight: 600;
+}
+.h-white {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+
+.label-black {
+  color: white;
 }
 
 .recipe-form {
@@ -30,6 +39,10 @@
 .deleteBtn {
   cursor: pointer;
 }
+.deleteBtnBlack {
+  cursor: pointer;
+  color: white;
+}
 
 .recipe-form input {
   padding: 10px;
@@ -38,10 +51,24 @@
   width: 100%;
   font-size: 14px;
 }
+
+.input-dark {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  background-color: #f3f3f3;
+}
 .recipe-form textarea {
   width: 100%;
 }
 .form-header {
+  height: 570px;
+  overflow: auto;
+  width: 50%;
+}
+.form-header-black {
   height: 570px;
   overflow: auto;
   width: 50%;
@@ -60,6 +87,20 @@
 .form-header::-webkit-scrollbar-thumb {
   background-color: #000000;
   border: 2px solid #555555;
+}
+.form-header-black::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #000000;
+}
+
+.form-header-black::-webkit-scrollbar {
+  width: 5px;
+  background-color: #000000;
+}
+
+.form-header-black::-webkit-scrollbar-thumb {
+  background-color: #f3f3f3;
+  /* border: 2px solid #555555; */
 }
 .imgBtn {
   display: flex;
@@ -83,6 +124,26 @@
   background-color: black;
   color: white;
 }
+.upload-icon-black {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+  color: white;
+}
+.upload-icon-black:hover {
+  background-color: white;
+  color: black;
+}
+
+.p-black {
+  color: white;
+}
 
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
@@ -90,6 +151,10 @@
     margin: 50px 0px;
   }
   .form-header {
+    width: 85%;
+    overflow-x: hidden;
+  }
+  .form-header-black {
     width: 85%;
     overflow-x: hidden;
   }

@@ -5,3 +5,10 @@
   width: 100%;
   color: white;
 }
+.loginBtnDark {
+  background-color: #2f5288;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
+  color: white;
+}

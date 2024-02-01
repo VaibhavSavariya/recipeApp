@@ -58,6 +58,37 @@
   background-color: black;
   color: white;
 }
+.side-item-black {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  /* width: 100px; */
+  transition: all 0.3s;
+  color: white;
+}
+.side-item-black:hover {
+  background-color: white;
+  color: black;
+}
+.active-black {
+  background: white !important;
+  color: black !important;
+}
+.label-black {
+  color: white;
+}
+.input-black {
+  background-color: #e6e6e6;
+  color: black;
+}
+.p-black {
+  color: white;
+}
 .profileMenu {
   height: 32px;
   width: 32px;

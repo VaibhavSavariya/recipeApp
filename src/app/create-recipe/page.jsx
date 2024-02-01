@@ -9,8 +9,10 @@ import * as Yup from "yup";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import "./style.css";
 import Button from "../Components/btn/page";
+import { useTheme } from "next-themes";
 
 const CreateRecipe = () => {
+  const { theme } = useTheme();
   const imageRef = useRef();
   const [image, setImage] = useState("");
   /** JSON DATA **/
@@ -84,8 +86,10 @@ const CreateRecipe = () => {
   return (
     <>
       <div className="recipe-form-container">
-        <h4>Create a Recipe </h4>
-        <div className="form-header">
+        <h4 className={theme === "light" ? "h-black" : "h-white"}>
+          Create a Recipe{" "}
+        </h4>
+        <div className={theme === "dark" ? "form-header-black" : "form-header"}>
           <Formik
             initialValues={{
               title: "",
@@ -125,12 +129,18 @@ const CreateRecipe = () => {
                     onChange={handleImageUpload}
                   />
                   <div
-                    className="upload-icon"
+                    className={
+                      theme === "light" ? "upload-icon" : "upload-icon-black"
+                    }
                     onClick={() => imageRef.current.click()}
                   >
                     <GrUpload />
                   </div>
-                  {!image && <p>Choose file to upload</p>}
+                  {!image && (
+                    <p className={theme === "dark" ? "p-black" : ""}>
+                      Choose file to upload
+                    </p>
+                  )}
                   {image && (
                     <Image
                       blurDataURL={image}
@@ -147,8 +157,17 @@ const CreateRecipe = () => {
                     />
                   )}
                 </div>
-                <label htmlFor="title">Title</label>
-                <Field name="title" type="text" />
+                <label
+                  className={theme === "dark" ? "label-black" : ""}
+                  htmlFor="title"
+                >
+                  Title
+                </label>
+                <Field
+                  className={theme === "dark" ? "input-dark" : ""}
+                  name="title"
+                  type="text"
+                />
                 <ErrorMessage
                   name="title"
                   render={(msg) => (
@@ -162,8 +181,14 @@ const CreateRecipe = () => {
                     </p>
                   )}
                 />
-                <label htmlFor="instructions">Instructions</label>
+                <label
+                  className={theme === "dark" ? "label-black" : ""}
+                  htmlFor="instructions"
+                >
+                  Instructions
+                </label>
                 <Field
+                  className={theme === "dark" ? "input-dark" : ""}
                   name="instructions"
                   as="textarea"
                   rows="4"
@@ -194,6 +219,7 @@ const CreateRecipe = () => {
                         <>
                           <div className="fieldArray">
                             <Field
+                              className={theme === "dark" ? "input-dark" : ""}
                               key={index}
                               name={`ingredients.${index}.ingredient`}
                               placeholder="Add Ingredient"
@@ -201,19 +227,33 @@ const CreateRecipe = () => {
                             <IoCloseCircleOutline
                               onClick={() => remove(index)}
                               size={26}
-                              className="deleteBtn"
+                              className={
+                                theme === "dark"
+                                  ? "deleteBtnBlack"
+                                  : "deleteBtn"
+                              }
                             />
                           </div>
                         </>
                       ))}
-                      <Button type="button" onClick={() => push("")}>
+                      <Button
+                        theme={theme}
+                        type="button"
+                        onClick={() => push("")}
+                      >
                         Add Ingredients
                       </Button>
                     </>
                   )}
                 </FieldArray>
-                <label htmlFor="summary">Summary</label>
+                <label
+                  className={theme === "dark" ? "label-black" : ""}
+                  htmlFor="summary"
+                >
+                  Summary
+                </label>
                 <Field
+                  className={theme === "dark" ? "input-dark" : ""}
                   name="summary"
                   as="textarea"
                   rows="4"
@@ -238,6 +278,7 @@ const CreateRecipe = () => {
                   )}
                 />
                 <Button
+                  theme={theme}
                   style={{
                     width: "200px",
                   }}

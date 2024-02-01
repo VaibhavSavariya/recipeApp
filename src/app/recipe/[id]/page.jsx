@@ -21,7 +21,9 @@ import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import recipes from "../../axios/Services/recipes";
 import Button from "@/app/Components/btn/page";
+import { useTheme } from "next-themes";
 const Recipe = () => {
+  const { theme } = useTheme();
   const params = useParams();
   const [activeBtn, setActiveBtn] = useState("Instructions");
   const [activeFav, setActiveFav] = useState(false);
@@ -136,39 +138,32 @@ const Recipe = () => {
               alignItems: "center",
             }}
           >
-            <span className="loader" />
+            <span className={theme === "dark" ? "loader-dark" : "loader"} />
           </div>
         ) : (
           <>
             <div className="detailLeft">
-              <h2>{data?.title}</h2>
+              <h2 className={theme === "dark" ? "p-black" : ""}>
+                {data?.title}
+              </h2>
               <img alt="recipe-logo" src={data?.image} width="100px" />
-              <p
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "5px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                }}
-              >
+              <p className={theme === "dark" ? "pf-black" : "pf"}>
                 Add to Favorites:{" "}
                 <span>
                   {FavId?.includes(parseInt(params?.id)) ? (
-                    <MdFavorite className="fav-btn" onClick={handleFavRemove} />
+                    <MdFavorite
+                      className={theme === "dark" ? "fav-btn-black" : "fav-btn"}
+                      onClick={handleFavRemove}
+                    />
                   ) : (
-                    <MdFavoriteBorder className="fav-btn" onClick={handleFav} />
+                    <MdFavoriteBorder
+                      className={theme === "dark" ? "fav-btn-black" : "fav-btn"}
+                      onClick={handleFav}
+                    />
                   )}
                 </span>
               </p>
-              <h2
-                style={{
-                  fontSize: "14px",
-                  marginTop: "20px",
-                }}
-              >
+              <h2 className={theme === "dark" ? "h-black" : "h-white"}>
                 Share with your friends :
               </h2>
               <div className="social-wrapper">
@@ -177,28 +172,44 @@ const Recipe = () => {
                   quote={"Checkout this amazing recipe."}
                   hashtag={"#recipe"}
                 >
-                  <FaXTwitter className="social-btn" />
+                  <FaXTwitter
+                    className={
+                      theme === "dark" ? "social-btn-black" : "social-btn"
+                    }
+                  />
                 </TwitterShareButton>
                 <FacebookShareButton
                   url={window.location.href}
                   quote={"Checkout this amazing recipe."}
                   hashtag={"#recipe"}
                 >
-                  <FaFacebookF className="social-btn" />
+                  <FaFacebookF
+                    className={
+                      theme === "dark" ? "social-btn-black" : "social-btn"
+                    }
+                  />
                 </FacebookShareButton>
                 <InstapaperShareButton
                   url={window.location.href}
                   quote={"Checkout this amazing recipe."}
                   hashtag={"#recipe"}
                 >
-                  <FaInstagram className="social-btn" />
+                  <FaInstagram
+                    className={
+                      theme === "dark" ? "social-btn-black" : "social-btn"
+                    }
+                  />
                 </InstapaperShareButton>
                 <WhatsappShareButton
                   url={window.location.href}
                   quote={"Checkout this amazing recipe."}
                   hashtag={"#recipe"}
                 >
-                  <FaWhatsapp className="social-btn" />
+                  <FaWhatsapp
+                    className={
+                      theme === "dark" ? "social-btn-black" : "social-btn"
+                    }
+                  />
                 </WhatsappShareButton>
               </div>
             </div>
@@ -227,18 +238,24 @@ const Recipe = () => {
                     overflow: "auto",
                     height: "350px",
                   }}
-                  className="instructions"
+                  className={
+                    theme === "dark" ? "instructions-black" : "instructions"
+                  }
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: data?.summary }}
-                    className="description"
+                    className={
+                      theme === "dark" ? "descriptionBlack" : "description"
+                    }
                   ></p>
                   <p> ------ </p>
                   <p
                     dangerouslySetInnerHTML={{
                       __html: data?.instructions,
                     }}
-                    className="description"
+                    className={
+                      theme === "dark" ? "descriptionBlack" : "description"
+                    }
                   ></p>
                 </div>
               )}
@@ -253,6 +270,7 @@ const Recipe = () => {
                     <li
                       style={{
                         marginBottom: "5px",
+                        color: theme === "dark" ? "white" : "",
                       }}
                       key={ingredient?.id}
                     >

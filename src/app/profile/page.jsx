@@ -14,7 +14,12 @@ import secureLocalStorage from "react-secure-storage";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Button from "../Components/btn/page";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import userImage from "../../../public/user-png-33842.png";
+import noDataImage from "../../../public/No data-amico.png";
 const Profile = () => {
+  const { theme } = useTheme();
   const router = useRouter();
   const [activeSlide, setActiveSlide] = useState("profile");
   const Me = JSON.parse(secureLocalStorage.getItem("Me"));
@@ -42,27 +47,43 @@ const Profile = () => {
       <div className="profile-container">
         <div className="sideBar">
           <div
-            className={`side-item ${activeSlide === "profile" ? "active" : ""}`}
+            className={`side-item ${
+              theme === "dark" ? "side-item-black" : ""
+            } ${activeSlide === "profile" ? "active" : ""} ${
+              activeSlide === "profile" && theme === "dark"
+                ? "active-black"
+                : ""
+            }`}
             onClick={() => setActiveSlide("profile")}
           >
             <CgProfile className="profileMenu" />
           </div>
           <div
             className={`side-item ${
-              activeSlide === "favorites" ? "active" : ""
+              theme === "dark" ? "side-item-black" : ""
+            } ${activeSlide === "favorites" ? "active" : ""} ${
+              activeSlide === "favorites" && theme === "dark"
+                ? "active-black"
+                : ""
             }`}
             onClick={() => setActiveSlide("favorites")}
           >
             <MdFavoriteBorder className="profileMenu" />
           </div>
-          <div className="side-item">
+          <div
+            className={`side-item ${theme === "dark" ? "side-item-black" : ""}`}
+          >
             <Link href={"/create-recipe"}>
               <IoCreateOutline className="profileMenu" />
             </Link>
           </div>
           <div
             className={`side-item ${
-              activeSlide === "submitRecipe" ? "active" : ""
+              theme === "dark" ? "side-item-black" : ""
+            } ${activeSlide === "submitRecipe" ? "active" : ""} ${
+              activeSlide === "submitRecipe" && theme === "dark"
+                ? "active-black"
+                : ""
             }`}
             onClick={() => setActiveSlide("submitRecipe")}
           >
@@ -77,44 +98,65 @@ const Profile = () => {
           {activeSlide === "profile" && (
             <>
               <div className="user-info">
-                <label htmlFor="username">Username</label>
+                <label
+                  className={theme === "dark" ? "label-black" : ""}
+                  htmlFor="username"
+                >
+                  Username
+                </label>
                 <input
                   id="username"
                   type="text"
                   placeholder="Enter Username"
                   defaultValue={Me?.username}
                   disabled
+                  className={theme === "dark" ? "input-black" : ""}
                 />
 
-                <label htmlFor="email">Email</label>
+                <label
+                  className={theme === "dark" ? "label-black" : ""}
+                  htmlFor="email"
+                >
+                  Email
+                </label>
                 <input
                   id="email"
                   type="email"
                   placeholder=" Enter Email"
                   defaultValue={Me?.email}
                   disabled
+                  className={theme === "dark" ? "input-black" : ""}
                 />
 
-                <label htmlFor="password">Password</label>
+                <label
+                  className={theme === "dark" ? "label-black" : ""}
+                  htmlFor="password"
+                >
+                  Password
+                </label>
                 <input
                   id="password"
                   placeholder=" Enter Password"
                   defaultValue={Me?.password}
                   disabled
+                  className={theme === "dark" ? "input-black" : ""}
                 />
               </div>
               <div className="image-container">
-                <img
-                  src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Fgeneric-user-icon%2Fgeneric-user-icon-13.jpg&f=1&nofb=1&ipt=cbfd89eabe9a6eb7740748b2184e11c2a23c2fece97d132f92f5c3e8f5e1d0aa&ipo=images"
+                <Image
+                  src={userImage}
                   alt="user-profile"
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    borderRadius: "50%",
-                  }}
+                  width={200}
+                  height={200}
                 />
-                <p>{Me?.username}</p>
-                <Button className="logoutBtn" onClick={handleLogOut}>
+                <p className={theme === "dark" ? "p-black" : ""}>
+                  {Me?.username}
+                </p>
+                <Button
+                  theme={theme}
+                  className="logoutBtn"
+                  onClick={handleLogOut}
+                >
                   Logout
                 </Button>
               </div>
@@ -122,7 +164,7 @@ const Profile = () => {
           )}
           {activeSlide === "favorites" && (
             <>
-              <h2>Favorites</h2>
+              <h2 className={theme === "dark" ? "p-black" : ""}>Favorites</h2>
               {Me?.favouriteRecipe?.length > 0 ? (
                 <Splide
                   options={{
@@ -170,13 +212,11 @@ const Profile = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img
-                    src="https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg"
+                  <Image
+                    src={noDataImage}
                     alt="no data icon"
-                    style={{
-                      height: "200px",
-                      width: "200px",
-                    }}
+                    width={300}
+                    height={300}
                   />
                 </div>
               )}
@@ -184,7 +224,9 @@ const Profile = () => {
           )}
           {activeSlide === "submitRecipe" && (
             <>
-              <h2>Submitted Recipes</h2>
+              <h2 className={theme === "dark" ? "p-black" : ""}>
+                Submitted Recipes
+              </h2>
               {Me?.submittedRecipe?.length > 0 ? (
                 <Splide
                   options={{
@@ -241,13 +283,11 @@ const Profile = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img
-                    src="https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg"
+                  <Image
+                    src={noDataImage}
                     alt="no data icon"
-                    style={{
-                      height: "200px",
-                      width: "200px",
-                    }}
+                    width={300}
+                    height={300}
                   />
                 </div>
               )}
