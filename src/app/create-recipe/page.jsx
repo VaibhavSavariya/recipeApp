@@ -86,7 +86,7 @@ const CreateRecipe = () => {
   return (
     <>
       <div className="recipe-form-container">
-        <h4 className={theme === "light" ? "h-black" : "h-white"}>
+        <h4 className={theme === "dark" ? "h-black" : "h-white"}>
           Create a Recipe{" "}
         </h4>
         <div className={theme === "dark" ? "form-header-black" : "form-header"}>

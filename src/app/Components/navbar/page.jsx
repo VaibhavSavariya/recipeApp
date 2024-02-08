@@ -11,7 +11,6 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const Me = JSON.parse(secureLocalStorage.getItem("Me"));
   const { theme, setTheme } = useTheme();
-  console.log("theme:", theme);
   return (
     <>
       <header className={theme === "dark" ? "navbar-dark" : "navbar"}>

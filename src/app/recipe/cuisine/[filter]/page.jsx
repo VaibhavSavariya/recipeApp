@@ -72,7 +72,9 @@ const SearchRecipe = () => {
             </div>
           ) : (
             <>
-              <h1>Filter Results...</h1>
+              <h1 className={theme === "dark" ? "h1-dark" : "h1"}>
+                Filter Results...
+              </h1>
               <div className="recipeCards">
                 {data?.length > 0 ? (
                   <>
